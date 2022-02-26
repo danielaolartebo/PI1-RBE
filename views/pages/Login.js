@@ -34,4 +34,20 @@ let Login = {
             </section>
         `
     }
+
+    , after_render: async () => {
+        document.getElementById("loginBtn").addEventListener ("click",  () => {
+            let email = document.getElementById("email_input");
+            let pass  = document.getElementById("pass_input");
+            if (email.value != "" && pass.value != "") {
+
+                username = email.value
+                login = true;
+                location.href = "#/";
+
+            } else {
+                alert("Insert email and password")
+            }
+        })
+    }
 }

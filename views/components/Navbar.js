@@ -44,4 +44,21 @@ let Navbar = {
         `
         return view
     },
+    
+    after_render: async () => {
+        //document.getElementById("register_btn").href = "#/register"
+        if (login) {
+            let regBtn = document.getElementById("register_btn")
+            let logBtn = document.getElementById("login_btn")
+            regBtn.innerText = username
+            logBtn.innerText = "Log out"
+
+            regBtn.href = "javascript:void(0)";
+            logBtn.addEventListener('click', () => {
+                location.href = "#/"
+                login = false
+            })
+
+        }
+     }
 }

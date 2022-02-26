@@ -101,3 +101,30 @@ const info = [
     ,{"id":"99","createdAt":"2018-10-04T01:22:51.665Z","name":"Carolanne Zieme Sr.","avatar":"https://s3.amazonaws.com/uifaces/faces/twitter/nasirwd/128.jpg","title":"Supervisor overriding","content":"GB JSON"}
     ,{"id":"100","createdAt":"2018-10-04T01:54:57.167Z","name":"Kristian Schmidt","avatar":"https://s3.amazonaws.com/uifaces/faces/twitter/giuliusa/128.jpg","title":"COM CSS Handcrafted Frozen Sausages","content":"Sausages attitude Outdoors"}
 ]
+
+
+let getPostsList = async () => {
+    
+   return info
+}
+
+let Home = {
+    render : async () => {
+        let posts = await getPostsList()
+        let view =  /*html*/`
+            <section class="section">
+                <h1> Home </h1>
+                <ul>
+                    ${ posts.map(post => 
+                        /*html*/`<li><a href="#/p/${post.id}">${post.title}</a></li>`
+                        ).join('\n ')
+                    }
+                </ul>
+            </section>
+        `
+        return view
+    }
+    , after_render: async () => {
+    }
+ 
+ }

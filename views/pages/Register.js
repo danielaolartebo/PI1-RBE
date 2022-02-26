@@ -1,5 +1,6 @@
 // Daniela Olarte Borja || David Montaño
 let Register = {
+
     render: async () => {
         return /*html*/ `
             <section class="section">
@@ -39,5 +40,21 @@ let Register = {
                 </div>
             </section>
         `
+    }
+
+    , after_render: async () => {
+        document.getElementById("register_submit_btn").addEventListener ("click",  () => {
+            let email       = document.getElementById("email_input");
+            let pass        = document.getElementById("pass_input");
+            let repeatPass  = document.getElementById("repeat_pass_input");
+            if (pass.value != repeatPass.value) {
+                alert (`Passwords do not match`)
+            } else if (email.value =='' | pass.value == '' | repeatPass == '') {
+                alert (`Fields cannot be empty`)
+            } 
+            else {
+                alert(`User with email ${email.value} was successfully submitted!`)
+            }    
+        })
     }
 }
