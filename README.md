@@ -1,4 +1,4 @@
-# ***REACT a1***
+# ***React basic examples***
 
 *This app main objective is to add tasks*
 
