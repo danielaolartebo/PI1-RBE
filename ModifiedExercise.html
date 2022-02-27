@@ -1,0 +1,288 @@
+<!--Daniela Olarte Borja || David Montaño Tamayo -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello World</title>
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    li {
+      list-style-type: upper-alpha
+    }
+  </style>
+</head>
+
+<body>
+  <div id="hello"></div>
+  <div id="timer-1"></div>
+  <div id="timer-2"></div>
+  <div id="all"></div>
+  <div id="markdown"></div>
+  <script type="text/babel">
+    class Activity1 extends React.Component {
+      render() {
+        return (
+          <div>
+            Hello {this.props.name}
+          </div>
+        );
+      }
+    }
+
+    ReactDOM.render(
+
+      <Activity1 name="David and Daniela" />,
+      document.getElementById('hello')
+    );
+
+    class Timer extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = { seconds: 0, minutes: 0, hours: 0 };
+      }
+
+      tick() {
+        this.setState(state => ({
+          seconds: state.seconds + this.Seconds(),
+          minutes: state.minutes + this.Minutes(),
+          hours: state.hours + this.Hours()
+        }));
+      }
+
+      Seconds() {
+        let sum = 0;
+        if (this.state.seconds < 59) {
+          sum = 1;
+        } else {
+          sum = -59
+        }
+        return sum;
+      }
+
+      Minutes() {
+        let sum = 0;
+        if (this.state.seconds === 59) {
+          sum = 1;
+        } else if (this.state.minutes === 59) {
+          sum = -59
+        }
+        return sum;
+      }
+
+      Hours() {
+        let sum = 0;
+        if (this.state.minutes === 59) {
+          sum = 1;
+        }
+        return sum;
+      }
+
+      Intervals() {
+        this.interval = setInterval(() => this.tick(), 1000);
+      }
+
+      UpdateIntervals() {
+        clearInterval(this.interval);
+      }
+
+      render() {
+        return (
+          <div>
+            Time: {this.state.hours}:{this.state.minutes}:{this.state.seconds}
+          </div>
+        );
+      }
+    }
+
+    ReactDOM.render(
+      <Timer />,
+      document.getElementById('timer-1')
+    );
+
+    class TimerV2 extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = { seconds: 0, minutes: 0, hours: 0 };
+      }
+
+      tick() {
+        this.setState(state => ({
+          seconds: state.seconds + this.checkSec(),
+          minutes: state.minutes + this.checkMin(),
+          hours: state.hours + this.chechHours()
+        }));
+      }
+
+      Seconds() {
+        let sum = 0;
+        if (this.state.seconds < 9) {
+          sum = 1;
+        } else {
+          sum = -9
+        }
+        return sum;
+      }
+
+      Minutes() {
+        let sum = 0;
+        if (this.state.seconds === 9) {
+          sum = 1;
+        } else if (this.state.minutes === 9) {
+          sum = -9
+        }
+        return sum;
+      }
+
+      Hours() {
+        let sum = 0;
+        if (this.state.minutes === 9) {
+          sum = 1;
+        }
+        return sum;
+      }
+
+      Intervals() {
+        this.interval = setInterval(() => this.tick(), 1000);
+      }
+
+      UpdateIntervals() {
+        clearInterval(this.interval);
+      }
+
+      render() {
+        return (
+          <div>
+            TimeV2: {this.state.hours}:{this.state.minutes}:{this.state.seconds}
+          </div>
+        );
+      }
+    }
+
+    ReactDOM.render(
+      <TimerV2 />,
+      document.getElementById('timer-2')
+    );
+
+    class TodoApp extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = { items: [], text: '' };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+      }
+
+      render() {
+        return (
+          <div>
+            <h3>TODO</h3>
+            <TodoList items={this.state.items} />
+            <form onSubmit={this.handleSubmit}>
+              <label htmlFor="new">
+                What needs to be done?
+              </label>
+              <input
+                id="new"
+                onChange={this.handleChange}
+                value={this.state.text}
+              />
+              <button>
+                Add {String.fromCharCode(65 + this.state.items.length)}
+              </button>
+            </form>
+          </div>
+        );
+      }
+
+      Letters() {
+        return String.fromCharCode();
+      }
+
+      handleChange(e) {
+        this.setState({ text: e.target.value });
+      }
+
+      handleSubmit(e) {
+        e.preventDefault();
+        if (this.state.text.length === 0) {
+          return;
+        }
+        const newItem = {
+          text: this.state.text,
+          id: Date.now()
+        };
+        this.setState(state => ({
+          items: state.items.concat(newItem),
+          text: ''
+        }));
+      }
+    }
+
+    class TodoList extends React.Component {
+      render() {
+        return (
+          <ul>
+            {this.props.items.map(item => (
+              <li key={item.id}>{item.text}</li>
+            ))}
+          </ul>
+        );
+      }
+    }
+
+    ReactDOM.render(
+      <TodoApp />,
+      document.getElementById('all')
+    );
+
+    class MarkdownEditor extends React.Component {
+      constructor(props) {
+        super(props);
+        this.md = new Remarkable({
+          html: true, 
+        });
+
+        this.handleChange = this.handleChange.bind(this);
+        this.state = { value: 'Hello, **world**!' };
+      }
+
+      handleChange(e) {
+        this.setState({ value: e.target.value });
+      }
+
+      getRawMarkup() {
+        return { __html: this.md.render(this.state.value) };
+      }
+
+      render() {
+        return (
+          <div className="MarkdownEditor">
+            <h3>Input</h3>
+            <label htmlFor="markdown-content">
+              Enter some markdown
+            </label>
+            <textarea
+              id="markdown-content"
+              onChange={this.handleChange}
+              defaultValue={this.state.value}
+            />
+            <h3>Output</h3>
+            <div
+              className="content"
+              dangerouslySetInnerHTML={this.getRawMarkup()}
+            />
+          </div>
+        );
+      }
+    }
+
+    ReactDOM.render(
+      <MarkdownEditor />,
+      document.getElementById('markdown')
+    );
+  </script>
+</body>
+</html>
