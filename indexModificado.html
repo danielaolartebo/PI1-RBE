@@ -8,6 +8,7 @@
   <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
   <script src="https://cdn.jsdelivr.net/remarkable/1.7.1/remarkable.min.js"></script>
+  <!-- Don't use this in production: -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <style>
     li {
@@ -17,13 +18,13 @@
 </head>
 
 <body>
-  <div id="hello"></div>
-  <div id="timer-1"></div>
-  <div id="timer-2"></div>
-  <div id="all"></div>
-  <div id="markdown"></div>
+  <div id="hello-example"></div>
+  <div id="timer-example"></div>
+  <div id="timer-exampleV2"></div>
+  <div id="todos-example"></div>
+  <div id="markdown-example"></div>
   <script type="text/babel">
-    class Activity1 extends React.Component {
+    class Actividad_1 extends React.Component {
       render() {
         return (
           <div>
@@ -34,9 +35,8 @@
     }
 
     ReactDOM.render(
-
-      <Activity1 name="David and Daniela" />,
-      document.getElementById('hello')
+      <Actividad_1 name="David y Daniela" />,
+      document.getElementById('hello-example')
     );
 
     class Timer extends React.Component {
@@ -47,13 +47,14 @@
 
       tick() {
         this.setState(state => ({
-          seconds: state.seconds + this.Seconds(),
-          minutes: state.minutes + this.Minutes(),
-          hours: state.hours + this.Hours()
+          seconds: state.seconds + this.checkSec(),
+          minutes: state.minutes + this.checkMin(),
+          hours: state.hours + this.chechHours()
         }));
       }
 
-      Seconds() {
+
+      checkSec() {
         let sum = 0;
         if (this.state.seconds < 59) {
           sum = 1;
@@ -63,7 +64,7 @@
         return sum;
       }
 
-      Minutes() {
+      checkMin() {
         let sum = 0;
         if (this.state.seconds === 59) {
           sum = 1;
@@ -73,7 +74,8 @@
         return sum;
       }
 
-      Hours() {
+
+      chechHours() {
         let sum = 0;
         if (this.state.minutes === 59) {
           sum = 1;
@@ -81,11 +83,11 @@
         return sum;
       }
 
-      Intervals() {
+      componentDidMount() {
         this.interval = setInterval(() => this.tick(), 1000);
       }
 
-      UpdateIntervals() {
+      componentWillUnmount() {
         clearInterval(this.interval);
       }
 
@@ -100,7 +102,7 @@
 
     ReactDOM.render(
       <Timer />,
-      document.getElementById('timer-1')
+      document.getElementById('timer-example')
     );
 
     class TimerV2 extends React.Component {
@@ -117,7 +119,8 @@
         }));
       }
 
-      Seconds() {
+
+      checkSec() {
         let sum = 0;
         if (this.state.seconds < 9) {
           sum = 1;
@@ -127,7 +130,7 @@
         return sum;
       }
 
-      Minutes() {
+      checkMin() {
         let sum = 0;
         if (this.state.seconds === 9) {
           sum = 1;
@@ -137,7 +140,9 @@
         return sum;
       }
 
-      Hours() {
+
+
+      chechHours() {
         let sum = 0;
         if (this.state.minutes === 9) {
           sum = 1;
@@ -145,11 +150,11 @@
         return sum;
       }
 
-      Intervals() {
+      componentDidMount() {
         this.interval = setInterval(() => this.tick(), 1000);
       }
 
-      UpdateIntervals() {
+      componentWillUnmount() {
         clearInterval(this.interval);
       }
 
@@ -164,7 +169,7 @@
 
     ReactDOM.render(
       <TimerV2 />,
-      document.getElementById('timer-2')
+      document.getElementById('timer-exampleV2')
     );
 
     class TodoApp extends React.Component {
@@ -181,11 +186,11 @@
             <h3>TODO</h3>
             <TodoList items={this.state.items} />
             <form onSubmit={this.handleSubmit}>
-              <label htmlFor="new">
+              <label htmlFor="new-todo">
                 What needs to be done?
               </label>
               <input
-                id="new"
+                id="new-todo"
                 onChange={this.handleChange}
                 value={this.state.text}
               />
@@ -197,7 +202,8 @@
         );
       }
 
-      Letters() {
+      checkLetter() {
+
         return String.fromCharCode();
       }
 
@@ -235,7 +241,7 @@
 
     ReactDOM.render(
       <TodoApp />,
-      document.getElementById('all')
+      document.getElementById('todos-example')
     );
 
     class MarkdownEditor extends React.Component {
@@ -281,8 +287,23 @@
 
     ReactDOM.render(
       <MarkdownEditor />,
-      document.getElementById('markdown')
+      document.getElementById('markdown-example')
     );
+
   </script>
+  <!--
+      Note: this page is a great way to try React but it's not suitable for production.
+      It slowly compiles JSX with Babel in the browser and uses a large development build of React.
+
+      Read this section for a production-ready setup with JSX:
+      https://reactjs.org/docs/add-react-to-a-website.html#add-jsx-to-a-project
+
+      In a larger project, you can use an integrated toolchain that includes JSX instead:
+      https://reactjs.org/docs/create-a-new-react-app.html
+
+      You can also use React without JSX, in which case you can remove Babel:
+      https://reactjs.org/docs/react-without-jsx.html
+    -->
 </body>
+
 </html>
