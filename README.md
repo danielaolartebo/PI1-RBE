@@ -16,7 +16,7 @@
     <a href="https://github.com/" target="_blank"> <img src="https://raw.githubusercontent.com/devicons/devicon/2ae2a900d2f041da66e950e4d48052658d850630/icons/github/github-original.svg" height="60" width = "60"></a>
 </p>
 
-*For all the updates of the software, check the releases [here](https://github.com/danielaolartebo/PI1-SPA-js/tags).*
+*For all the updates of the software, check the releases [here](https://github.com/danielaolartebo/PI1-RBE/tags).*
 
 ## ***Local Deploy*** 📦
 
